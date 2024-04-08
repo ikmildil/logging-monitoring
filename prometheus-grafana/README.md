@@ -147,7 +147,7 @@ Create the prometheus.yml file.
 ```
 sudo vi /etc/prometheus/prometheus.yml
 ```
-Here’s an example of a scraping job that scrapes metrics from a Node Exporter running on the same machine: 
+Here’s an example of a scraping job that scrapes metrics from a Node Exporter running on the same machine: [Dont forget to replace it to Your IP]
 ```
 scrape_configs:
   - job_name: 'generalec2'
@@ -162,6 +162,8 @@ sudo chown prometheus:prometheus /etc/prometheus/prometheus.yml
 ```
 sudo vi /etc/systemd/system/prometheus.service
 ```
+
+And Copy the following, save and exit.
 
 ```
 [Unit]
@@ -188,20 +190,25 @@ $ sudo systemctl daemon-reload
 $ sudo systemctl enable --now prometheus
 $ sudo systemctl status prometheus
 ```
+
 To access Prometheus use the following link
-Change the IP address to your own;
+
+Change the IP address to your own.
+
 
 http://54.77.35.30:9090
+
 if we visit the following link we should see our Node Exporter on 'generalec2' instance.
+
 http://54.77.35.30:9090/targets
+
 
 <img src="/prometheus-grafana/pics/prom-4.png" width="500" />
 
 
 ## Installing and Configuring Grafana
-On the third EC2 instance, we download and install Grafana using the official YUM repository. We start the Grafana server and access the Grafana UI via a web browser. We log in with the default credentials and add Prometheus as a data source in Grafana.
 
-In the third EC2 instance, the provided commands set up Grafana, a popular data visualization and monitoring tool. First, a Grafana repository is configured in the YUM package manager by creating a new repository file. This allows the system to download and install the latest version of Grafana from the official Grafana repository.
+In the third EC2 instance, the provided commands set up Grafana. First, a Grafana repository is configured in the YUM package manager by creating a new repository file. This allows the system to download and install the latest version of Grafana from the official Grafana repository.
 
 After setting up the repository, the Grafana package is installed using the YUM package manager. The systemd daemon is then reloaded, and the Grafana server is enabled and started.
 
@@ -209,9 +216,13 @@ Once the Grafana server is running, the Grafana web UI can be accessed at the sp
 
 Finally, the user can add Prometheus as a data source in Grafana, allowing them to visualize and analyze the metrics collected by the Prometheus monitoring system set up on the second EC2 instance.
 
+Let's Create a repository.
+
 ```
 $ sudo vi /etc/yum.repos.d/grafana.repo
 ```
+
+Enter the following, save and exit.
 
 ```
 [grafana]
@@ -224,6 +235,8 @@ gpgkey=https://packages.grafana.com/gpg.key
 sslverify=1
 sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
+
+The following will install enable and start the Grafan service.
 
 ```
 $ sudo yum install grafana -y
